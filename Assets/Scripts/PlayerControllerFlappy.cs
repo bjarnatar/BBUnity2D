@@ -4,7 +4,7 @@ using System.Collections;
 public class PlayerControllerFlappy : MonoBehaviour
 {
 	public float jumpForce = 5;
-
+	
 	private GameManager gm;
 	
 	void Start ()
