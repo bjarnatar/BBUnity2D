@@ -16,4 +16,11 @@ public class GameManager : MonoBehaviour
 	{
 		levelSpeed += Time.deltaTime;
 	}
+
+	public void PlayerDied()
+	{
+		// This simply reloads level 0.
+		// TODO Make this a bit more proper
+		Application.LoadLevel(0);
+	}
 }
