@@ -4,7 +4,8 @@ using System.Collections;
 public class GameManager : MonoBehaviour
 {
 	public float levelSpeed = 3.0f;
-
+	public float levelAcceleration = 0.1f;
+	
 	// Use this for initialization
 	void Start ()
 	{
@@ -14,7 +15,7 @@ public class GameManager : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		levelSpeed += Time.deltaTime;
+		levelSpeed += Time.deltaTime * levelAcceleration;
 	}
 
 	public void PlayerDied()

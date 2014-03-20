@@ -4,23 +4,24 @@ using System.Collections;
 public class PlayerScoreFlappy : MonoBehaviour
 {
 	public TextMesh scoreTextMesh;
+	public TextMesh highScoreTextMesh;
 
 	private int score = 0;
+	private int highScore = 0;
 
 	void Awake()
 	{
 		scoreTextMesh.text = "Score: 0";
+		highScoreTextMesh.text = "Highscore: " + PlayerPrefs.GetInt ("HighScore", 0);
 	}
 
-	// Use this for initialization
-	void Start ()
+	public void UpdateHighScoreOnDeath()
 	{
-	}
-	
-	// Update is called once per frame
-	void Update ()
-	{
-	
+		int savedHighScore = PlayerPrefs.GetInt("HighScore", 0);
+		if (score > savedHighScore)
+		{
+			PlayerPrefs.SetInt("HighScore", score);
+		}
 	}
 
 	void OnTriggerEnter2D(Collider2D other)

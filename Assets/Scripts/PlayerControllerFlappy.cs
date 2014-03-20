@@ -22,7 +22,13 @@ public class PlayerControllerFlappy : MonoBehaviour
 
 	void OnCollisionEnter2D(Collision2D other)
 	{
-		Debug.Log ("Collided with something, let's die");
+		// This means we died
+		PlayerScoreFlappy score = GetComponent<PlayerScoreFlappy>();
+		if (score)
+		{
+			score.UpdateHighScoreOnDeath();
+		}
+
 		gm.PlayerDied();
 	}
 }
