@@ -11,6 +11,18 @@ public class AsteroidPlayerShip : MonoBehaviour
 
 	public bool allowBackwardsThrust = true;
 
+	public Rigidbody2D bulletPrefab;
+	public float bulletSpeed = 20;
+
+	void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.Space))
+		{
+			Rigidbody2D bulletInstance = (Rigidbody2D) Instantiate (bulletPrefab, transform.position, transform.rotation);
+			bulletInstance.velocity = transform.rotation * Vector2.up * bulletSpeed;
+		}
+	}
+
 	void FixedUpdate()
 	{
 		// ROTATION
