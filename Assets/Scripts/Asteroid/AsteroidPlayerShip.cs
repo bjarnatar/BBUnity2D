@@ -63,4 +63,18 @@ public class AsteroidPlayerShip : MonoBehaviour
 			rigidbody2D.velocity = rigidbody2D.velocity.normalized * maxTravelSpeed;
 		}
 	}
+
+	void OnCollisionEnter2D(Collision2D other)
+	{
+		if (other.gameObject.tag == "Asteroid")
+		{ // Die!
+			// Update high score
+			AsteroidPlayerScore aps = GetComponent<AsteroidPlayerScore>();
+			aps.UpdateHighScoreOnDeath();
+
+			// Tell the game manager the player is dead
+			AsteroidGameManager agm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<AsteroidGameManager>();
+			agm.PlayerDied();
+		}
+	}
 }

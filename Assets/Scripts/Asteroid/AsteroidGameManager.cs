@@ -31,6 +31,11 @@ public class AsteroidGameManager : MonoBehaviour
 	
 	}
 
+	public void PlayerDied()
+	{
+		Application.LoadLevel(0);
+	}
+
 	// TODO Make the "spawn frame" narrower around the screen. Build in a little buffer around the play area
 	void SpawnAsteroid()
 	{
