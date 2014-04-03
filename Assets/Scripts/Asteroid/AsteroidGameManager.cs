@@ -18,7 +18,7 @@ public class AsteroidGameManager : MonoBehaviour
 		{
 			SpawnAsteroid();
 		}
-	
+
 	}
 	
 	// Update is called once per frame
@@ -27,17 +27,25 @@ public class AsteroidGameManager : MonoBehaviour
 	}
 
 	// TODO Make the "spawn frame" narrower around the screen. Build in a little buffer around the play area
-	// TODO Make wrap around trigger after asteroids have entered the screen
 	void SpawnAsteroid()
 	{
 		GameObject player = GameObject.FindGameObjectWithTag("Player");
 		float distanceToPlayer = 0;
 		float spawnPosX = Random.Range(-stageArea.x, stageArea.x);
+		if (spawnPosX < 0)
+		{
+			spawnPosX -= stageArea.x;
+		}
 		if (spawnPosX > 0)
 		{
 			spawnPosX += stageArea.x;
 		}
+
 		float spawnPosY = Random.Range(-stageArea.y, stageArea.y);
+		if (spawnPosY < 0)
+		{
+			spawnPosY -= stageArea.y;
+		}
 		if (spawnPosY > 0)
 		{
 			spawnPosY += stageArea.y;
@@ -47,5 +55,8 @@ public class AsteroidGameManager : MonoBehaviour
 
 		Rigidbody2D asteroid = (Rigidbody2D) Instantiate(asteroidPrefab, spawnPos, transform.rotation);
 		asteroid.velocity = (targetPos - spawnPos).normalized * spawnVelocity;
+
+		AsteroidResetPosition arp = asteroid.GetComponent<AsteroidResetPosition>();
+		arp.wraparoundActive = false; // No wrapping until we have entered the stage area
 	}
 }
