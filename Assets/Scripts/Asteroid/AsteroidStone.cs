@@ -16,11 +16,6 @@ public class AsteroidStone : MonoBehaviour
 	
 	}
 
-//	static Vector2 Make2D(Vector3 input)
-//	{
-//
-//	}
-
 	void OnCollisionEnter2D(Collision2D other)
 	{
 		if (other.gameObject.tag == "Bullet")
