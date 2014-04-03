@@ -9,6 +9,7 @@ public class AsteroidStone : MonoBehaviour
 	public float newAsteroidVelocity = 0.5f;
 	public float asteroidExitAngle = 60.0f;
 	public float newAsteroidStartingDistance = 1f;
+	public int score = 10;
 
 	public bool isLarge = false;
 
@@ -30,6 +31,12 @@ public class AsteroidStone : MonoBehaviour
 			{ // Let the game manager know a large asteroid was just destroyed
 				AsteroidGameManager agm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<AsteroidGameManager>();
 				agm.currentLargeAsteroids--;
+			}
+
+			AsteroidPlayerScore aps = GameObject.FindGameObjectWithTag("Player").GetComponent<AsteroidPlayerScore>();
+			if (aps)
+			{
+				aps.AddScore(score);
 			}
 
 			// If there is a prefab for the next size down, create two new asteroids (split in half)
