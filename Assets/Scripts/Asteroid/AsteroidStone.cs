@@ -10,6 +10,8 @@ public class AsteroidStone : MonoBehaviour
 	public float asteroidExitAngle = 60.0f;
 	public float newAsteroidStartingDistance = 1f;
 
+	public bool isLarge = false;
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -23,6 +25,12 @@ public class AsteroidStone : MonoBehaviour
 			// Destroy this asteroid and the bullet
 			Object.Destroy(gameObject);
 			Object.Destroy(other.gameObject);
+
+			if (isLarge)
+			{ // Let the game manager know a large asteroid was just destroyed
+				AsteroidGameManager agm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<AsteroidGameManager>();
+				agm.currentLargeAsteroids--;
+			}
 
 			// If there is a prefab for the next size down, create two new asteroids (split in half)
 			if (asteroidPrefabNextSizeDown)
