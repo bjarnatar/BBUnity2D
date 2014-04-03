@@ -11,6 +11,7 @@ public class AsteroidGameManager : MonoBehaviour
 	public float spawnVelocity = 2f;
 	
 	public Rigidbody2D asteroidPrefab;
+	public TextMesh gameOverText;
 
 	public int currentLargeAsteroids = 0;
 
@@ -32,6 +33,12 @@ public class AsteroidGameManager : MonoBehaviour
 	}
 
 	public void PlayerDied()
+	{
+		Invoke ("ReloadLevel", 3f);
+		gameOverText.gameObject.SetActive(true);
+	}
+
+	void ReloadLevel()
 	{
 		Application.LoadLevel(0);
 	}

@@ -14,47 +14,55 @@ public class AsteroidPlayerShip : MonoBehaviour
 	public Rigidbody2D bulletPrefab;
 	public float bulletSpeed = 20;
 
+	private bool isDead = false;
+
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.Space))
+		if (!isDead)
 		{
-			Rigidbody2D bulletInstance = (Rigidbody2D) Instantiate (bulletPrefab, transform.position, transform.rotation);
-			bulletInstance.velocity = transform.rotation * Vector2.up * bulletSpeed;
+			if (Input.GetKeyDown(KeyCode.Space))
+			{
+				Rigidbody2D bulletInstance = (Rigidbody2D) Instantiate (bulletPrefab, transform.position, transform.rotation);
+				bulletInstance.velocity = transform.rotation * Vector2.up * bulletSpeed;
+			}
 		}
 	}
 
 	void FixedUpdate()
 	{
-		// ROTATION
-		if(rigidbody2D.angularVelocity < maxRotationSpeed && Input.GetAxis("Horizontal") < 0)
+		if (!isDead)
 		{
-			rigidbody2D.AddTorque(-Input.GetAxis("Horizontal") * rotationPower);
-		}
-		if(rigidbody2D.angularVelocity > -maxRotationSpeed && Input.GetAxis("Horizontal") > 0)
-		{
-			rigidbody2D.AddTorque(-Input.GetAxis("Horizontal") * rotationPower);
-		}
-		// If rotation speed is higher than what we have defined maxRotationSpeed to be
-		if(rigidbody2D.angularVelocity > maxRotationSpeed)
-		{ // ... then set the current rotation (angularVelocity) to be the same as maxRotationSpeed
-			rigidbody2D.angularVelocity = maxRotationSpeed;
-		}
-		if(rigidbody2D.angularVelocity < -maxRotationSpeed)
-		{
-			rigidbody2D.angularVelocity = -maxRotationSpeed;
-		}
-
-		// THRUST
-		// If the traveling speed (velocity.magnitude) is less than our maxTravelSpeed
-		if(rigidbody2D.velocity.magnitude <= maxTravelSpeed)
-		{ // ... then allow for more thrust to be applied
-			if (allowBackwardsThrust)
+			// ROTATION
+			if(rigidbody2D.angularVelocity < maxRotationSpeed && Input.GetAxis("Horizontal") < 0)
 			{
-				rigidbody2D.AddForce(transform.up * thrustPower * Input.GetAxis("Vertical"));
+				rigidbody2D.AddTorque(-Input.GetAxis("Horizontal") * rotationPower);
 			}
-			else
+			if(rigidbody2D.angularVelocity > -maxRotationSpeed && Input.GetAxis("Horizontal") > 0)
 			{
-				rigidbody2D.AddForce(transform.up * thrustPower * Mathf.Max(Input.GetAxis("Vertical"), 0));
+				rigidbody2D.AddTorque(-Input.GetAxis("Horizontal") * rotationPower);
+			}
+			// If rotation speed is higher than what we have defined maxRotationSpeed to be
+			if(rigidbody2D.angularVelocity > maxRotationSpeed)
+			{ // ... then set the current rotation (angularVelocity) to be the same as maxRotationSpeed
+				rigidbody2D.angularVelocity = maxRotationSpeed;
+			}
+			if(rigidbody2D.angularVelocity < -maxRotationSpeed)
+			{
+				rigidbody2D.angularVelocity = -maxRotationSpeed;
+			}
+
+			// THRUST
+			// If the traveling speed (velocity.magnitude) is less than our maxTravelSpeed
+			if(rigidbody2D.velocity.magnitude <= maxTravelSpeed)
+			{ // ... then allow for more thrust to be applied
+				if (allowBackwardsThrust)
+				{
+					rigidbody2D.AddForce(transform.up * thrustPower * Input.GetAxis("Vertical"));
+				}
+				else
+				{
+					rigidbody2D.AddForce(transform.up * thrustPower * Mathf.Max(Input.GetAxis("Vertical"), 0));
+				}
 			}
 		}
 		// Cap velocity at maxTravelSpeed
@@ -75,6 +83,9 @@ public class AsteroidPlayerShip : MonoBehaviour
 			// Tell the game manager the player is dead
 			AsteroidGameManager agm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<AsteroidGameManager>();
 			agm.PlayerDied();
+
+			// Disable Inputs
+			isDead = true;
 		}
 	}
 }
