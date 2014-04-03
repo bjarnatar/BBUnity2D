@@ -14,6 +14,8 @@ public class AsteroidPlayerShip : MonoBehaviour
 	public Rigidbody2D bulletPrefab;
 	public float bulletSpeed = 20;
 
+	public AudioSource deathSound;
+
 	private bool isDead = false;
 
 	void Update()
@@ -79,6 +81,8 @@ public class AsteroidPlayerShip : MonoBehaviour
 			// Update high score
 			AsteroidPlayerScore aps = GetComponent<AsteroidPlayerScore>();
 			aps.UpdateHighScoreOnDeath();
+
+			Instantiate(deathSound);
 
 			// Tell the game manager the player is dead
 			AsteroidGameManager agm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<AsteroidGameManager>();

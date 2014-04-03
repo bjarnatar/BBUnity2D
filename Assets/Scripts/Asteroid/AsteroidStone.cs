@@ -10,6 +10,7 @@ public class AsteroidStone : MonoBehaviour
 	public float asteroidExitAngle = 60.0f;
 	public float newAsteroidStartingDistance = 1f;
 	public int score = 10;
+	public AudioSource explosionSound;
 
 	public bool isLarge = false;
 
@@ -32,6 +33,8 @@ public class AsteroidStone : MonoBehaviour
 				AsteroidGameManager agm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<AsteroidGameManager>();
 				agm.currentLargeAsteroids--;
 			}
+
+			Instantiate(explosionSound);
 
 			AsteroidPlayerScore aps = GameObject.FindGameObjectWithTag("Player").GetComponent<AsteroidPlayerScore>();
 			if (aps)
